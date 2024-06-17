@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-
 # 1.编译kanalyzer ----------------------------------------------------------------------
 # LLVM version: 15.0.0
 ROOT=$(pwd)
@@ -30,6 +29,7 @@ fi
 
 cmake -DCMAKE_INSTALL_PREFIX=$ROOT/llvm-project/prefix -P cmake_install.cmake
 
+cd $ROOT && make
 
 # 2.构建bc文件 ----------------------------------------------------------------------------
 
@@ -74,27 +74,9 @@ find $KERNEL_SRC -name "*.bc" > bc.list
 echo $KANALYZER
 echo $ROOT
 
-# 使用kanalyzer，结果放在result.txt
-$KANALYZER @bc.list &> result.txt
 
+# 3.使用kanalyzer分析bc文件，结果放在result.txt  --------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# $KANALYZER @bc.list &> result.txt
 
 
