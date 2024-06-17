@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
-# 1.编译kanalyzer ----------------------------------------------------------------------
-# LLVM version: 15.0.0
+# 1.编译kanalyzer and IRDumper ------------------------------------------------------------------
+
+# 下载LLVM version: 15.0.0
 ROOT=$(pwd)
 if [ ! -d "llvm-project" ]; then
   git clone git@github.com:llvm/llvm-project.git
@@ -29,12 +30,16 @@ fi
 
 cmake -DCMAKE_INSTALL_PREFIX=$ROOT/llvm-project/prefix -P cmake_install.cmake
 
+# 修改mlta/src/lib/Config.h文件内的linux源目录文件
+# define SOURCE_CODE_PATH "/path/to/linux"
 cd $ROOT && make
+cd IRDumper && make
+
 
 # 2.构建bc文件 ----------------------------------------------------------------------------
 
 # linux源文件绝对路径
-KERNEL_SRC="/home/vscode/linux-6.6.28"
+KERNEL_SRC="/home/vscode/linux-5.1"
 
 cd $ROOT
 IRDUMPER="$(pwd)/IRDumper/build/lib/libDumper.so"
