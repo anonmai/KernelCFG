@@ -57,8 +57,8 @@ if [ ! -f "Makefile.bak" ]; then
 fi
 
 # 打印信息
-echo $NEW_CMD >$KERNEL_SRC/IRDumper.cmd
-cat $KERNEL_SRC/Makefile.bak $KERNEL_SRC/IRDumper.cmd >$KERNEL_SRC/Makefile
+echo $NEW_CMD >IRDumper.cmd
+cat Makefile.bak IRDumper.cmd >Makefile
 
 # 构建linux的config文件
 make $CONFIG
