@@ -50,18 +50,18 @@ NEW_CMD="\n\n\
 KBUILD_USERCFLAGS += -Wno-error -g -Xclang -no-opaque-pointers -Xclang -flegacy-pass-manager -Xclang -load -Xclang $IRDUMPER\nKBUILD_CFLAGS += -Wno-error -g -Xclang -no-opaque-pointers -Xclang -flegacy-pass-manager -Xclang -load -Xclang $IRDUMPER"
 
 # 生成makefile的back文件，防止污染原makefile文件
-if [ ! -f "$KERNEL_SRC/Makefile.bak" ]; then
-  cp $KERNEL_SRC/Makefile $KERNEL_SRC/Makefile.bak
+cd $KERNEL_SRC
+make clean
+if [ ! -f "Makefile.bak" ]; then
+  cp Makefile Makefile.bak
 fi
 
 # 打印信息
 echo $NEW_CMD >$KERNEL_SRC/IRDumper.cmd
 cat $KERNEL_SRC/Makefile.bak $KERNEL_SRC/IRDumper.cmd >$KERNEL_SRC/Makefile
-echo $CLANG
-echo $NEW_CMD
 
 # 构建linux的config文件
-cd $KERNEL_SRC && make $CONFIG
+make $CONFIG
 
 # 构建linux的bc文件
 make CC=$CLANG -j`nproc` -k -i
@@ -76,12 +76,7 @@ touch bc.list
 # 把所有的bc文件的路径放入到bc.list
 find $KERNEL_SRC -name "*.bc" > bc.list
 
-echo $KANALYZER
-echo $ROOT
-
 
 # 3.使用kanalyzer分析bc文件，结果放在result.txt  --------------------------------------
 
-# $KANALYZER @bc.list &> result.txt
-
-
+$KANALYZER @bc.list &> result.txt
