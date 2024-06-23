@@ -45,6 +45,8 @@ cd $ROOT
 IRDUMPER="$(pwd)/IRDumper/build/lib/libDumper.so"
 CLANG="$(pwd)/llvm-project/prefix/bin/clang"
 KANALYZER="$ROOT/build/lib/kanalyzer"
+
+# 编译内核配置信息
 CONFIG="allnoconfig"
 NEW_CMD="\n\n\
 KBUILD_USERCFLAGS += -Wno-error -g -Xclang -no-opaque-pointers -Xclang -flegacy-pass-manager -Xclang -load -Xclang $IRDUMPER\nKBUILD_CFLAGS += -Wno-error -g -Xclang -no-opaque-pointers -Xclang -flegacy-pass-manager -Xclang -load -Xclang $IRDUMPER"
@@ -79,4 +81,4 @@ find $KERNEL_SRC -name "*.bc" > bc.list
 
 # 3.使用kanalyzer分析bc文件，结果放在result.txt  --------------------------------------
 
-$KANALYZER @bc.list &> result.txt
+$KANALYZER @bc.list 2> result.txt
