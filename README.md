@@ -4,12 +4,11 @@ Before all, Download the linux kernel source.
 
 Make sure the path to kernel souce in `src/lib/Config.h` is correct.
 
-define SOURCE_CODE_PATH "/home/vscode/linux-5.1"
+define SOURCE_CODE_PATH "/home/path/to/linux-source"
 
 ## Experiment Environment
 ```sh
 sudo apt install cmake
-sudo apt install g++-10
 sudo apt install g++
 ```
 + VMWare虚拟机
